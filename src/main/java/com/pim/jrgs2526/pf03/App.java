@@ -16,6 +16,6 @@ public class App
             return -1;
         if (nota >= 5 && nota <= 10)
             return 1;
-        throw new IllegalArgumentException("Error al calcular nota");
+        throw new IllegalArgumentException("Error al calcular la nota");
     }
 }
