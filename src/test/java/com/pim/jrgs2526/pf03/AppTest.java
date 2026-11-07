@@ -9,25 +9,31 @@ import org.junit.jupiter.api.Test;
  */
 public class AppTest {
     
-   @ParameterizedTest(name = "Nota {0} debe devolver {1}")
-    @CsvSource({
-        "6, 1",    // Caso aprobado
-        "2, -1"    // Caso suspenso
-    })
-    public void testCalcularNotaValida(int nota, int resultadoEsperado) {
+  @ParameterizedTest
+    @ValueSource(ints = {5, 6, 9})
+    public void testCalcularAprobado(int nota) {
         App main = new App();
         int resultado = main.calcularNota(nota);
-        Assertions.assertEquals(resultadoEsperado, resultado);
+        Assertions.assertEquals(1, resultado);
     }
 
-    @ParameterizedTest(name = "Nota no valida {0} debe lanzar IllegalArgumentException")
-    @ValueSource(ints = {63, -1, 11}
+    @ParameterizedTest
+    @ValueSource(ints = {0, 2, 4})
+    public void testCalcularSuspenso(int nota) {
+        App main = new App();
+        int resultado = main.calcularNota(nota);
+        Assertions.assertEquals(-1, resultado);
+    }
+    
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 11, 63})
     public void testCalcularError(int notaInvalida) {
         App main = new App();
-        IllegalArgumentException excepcion = Assertions.assertThrows(
-            IllegalArgumentException.class,
-            () -> main.calcularNota(notaInvalida)
-        );
-        Assertions.assertEquals("Error al calcular la nota", excepcion.getMessage());
+        try {
+            int resultado = main.calcularNota(notaInvalida);
+            Assertions.fail(); 
+        } catch (IllegalArgumentException e) {
+            Assertions.assertEquals("Error al calcular la nota", e.getMessage());
+        }
     }
 }
