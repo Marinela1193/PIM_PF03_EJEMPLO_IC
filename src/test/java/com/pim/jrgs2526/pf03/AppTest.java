@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  */
 public class AppTest {
     
-  @ParameterizedTest
+    @ParameterizedTest
     @ValueSource(ints = {5, 6, 9})
     public void testCalcularAprobado(int nota) {
         App main = new App();
